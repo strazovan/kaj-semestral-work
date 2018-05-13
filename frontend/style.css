@@ -1,0 +1,95 @@
+body {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+#room-list li{
+    border: 1px solid white;
+    background-color: lightblue;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#room-list .current-room{
+    background-color: green;
+}
+
+#room-list li a {
+    text-decoration: none;
+    color: white;
+}
+
+.room{
+    transition: all 1s;
+}
+
+.room:not(:target) { 
+    height: 0;
+    transform: scale(0)
+}
+
+.room {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+canvas:not(.canvas-visible){
+    display: none;
+}
+
+.users-box ul {
+    list-style-type: none;
+}
+
+.chat-area{
+    flex-grow: 1;
+}
+
+.message-box{
+    border-radius: 5px;
+    background-color: lightblue;
+    margin-bottom: 10px;
+}
+
+.message-box * {
+    margin-left: 10px;
+}
+
+.message-box p{
+    padding-bottom: 10px;
+}
+
+.draw-space {
+    border: 1px solid black;
+}
+.room-box {
+    overflow: scroll;
+    min-height: 80vh;
+    max-height: 80vh;
+    border: 1px solid black;
+    flex-grow: 1;
+}
+
+/* .room[class~=dragging]{
+    opacity: 0.5;
+} */
+
+#empty {
+    flex-grow: 1;
+}
+
+.send-box{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.canvas-button{
+    align-self: flex-end;
+}
