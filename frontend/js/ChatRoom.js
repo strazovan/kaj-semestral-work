@@ -42,6 +42,11 @@ class ChatRoom {
         this._sendMessage(msg)
     }
 
+    sendPosition(positionString) {
+        const msg = new Message(this._username, "MESSAGE", "POSITION", positionString)
+        this._sendMessage(msg)
+    }
+
     _login() {
         if (!this._loggedIn) {
             this._sendMessage(new Message(this._username, "LOGIN", "TEXT_MESSAGE", this._username))

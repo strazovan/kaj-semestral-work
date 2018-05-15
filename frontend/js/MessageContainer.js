@@ -17,6 +17,9 @@ class MessageContainer {
             case "IMAGE":
                 this._addImageMessage(message)
                 break
+            case "POSITION":
+                this._addPositionMessage(message)
+                break
         }
 
         this._messageComponent.scrollTo(0, this._messageComponent.scrollHeight)
@@ -50,11 +53,28 @@ class MessageContainer {
 
         image.src = data
 
-        const content = document.createElement("p")
+        const content = document.createElement("p") //todo delete to make it valid html5
         imageDiv.appendChild(canvas)
         content.appendChild(imageDiv)
         div.appendChild(content)
         this._messageComponent.appendChild(div)
+    }
+
+    _addPositionMessage(message){
+        const div = this._prepareMessageDiv(message)
+
+        const mapDiv = document.createElement("div")
+        mapDiv.classList.add("map-div")
+        
+        div.appendChild(mapDiv)
+        this._messageComponent.appendChild(div)
+
+        const positions = message.content.split(" ")
+        const middle = SMap.Coords.fromWGS84(positions[0], positions[1])
+        const map = new SMap(JAK.gel(mapDiv), middle, 8, SMap.DEF_TURIST)
+        map.addMarker(middle)
+
+       
     }
 
     _prepareMessageDiv(message) {

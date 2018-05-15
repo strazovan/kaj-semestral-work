@@ -137,6 +137,22 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     sendImage.appendChild(sendImageBtn)
     chatarea.appendChild(sendImage)
 
+    const sendPosition = document.createElement("div")
+
+    const sendPositionBtn = document.createElement("input")
+    sendPositionBtn.setAttribute("type", "button")
+    sendPositionBtn.value = "Send Position"
+
+    sendPositionBtn.addEventListener("click", e=> {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const toSend = pos.coords.longitude + " " + pos.coords.latitude
+            room.sendPosition(toSend)
+        })
+    })
+
+    sendPosition.appendChild(sendPositionBtn)
+    chatarea.appendChild(sendPosition)
+
     const drawSpace = document.createElement("div")
 
     canvas.width = 400

@@ -93,3 +93,8 @@ canvas:not(.canvas-visible){
 .canvas-button{
     align-self: flex-end;
 }
+
+.map-div {
+    width: 400px;
+    height: 400px;
+}
