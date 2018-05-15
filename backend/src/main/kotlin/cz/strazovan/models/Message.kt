@@ -4,6 +4,8 @@ package cz.strazovan.models
 enum class ContentType(val value : String){
     TEXT_MESSAGE("message/text"), IMAGE("message/image"), MESSAGE_LIST("message/list"),
 
+    POSITION("message/position"),
+
     USERS_LIST("message/users-list"),
 
     USER_CONNECTED("message/user-connected"),
