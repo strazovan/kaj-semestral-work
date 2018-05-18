@@ -31,6 +31,10 @@ class ChatRoom {
         return this._roomName
     }
 
+    disconnect(){
+        this._socket.close()
+    }
+
     _sendMessage(message) {
         const string = JSON.stringify(message)
         this._socket.send(string)

@@ -3,7 +3,7 @@ import { ChatRoom } from './ChatRoom.js'
 const name = document.getElementById("username")
 const loginBtn = document.getElementById("login-button")
 const username = document.getElementById("username-settings");
-const chats = []
+let chats = []
 
 function createSettings() {
     const roomList = document.getElementById("room-list")
@@ -187,6 +187,20 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
         roomLi.classList.toggle("current-room")
     })
 
+    const settingsRoomList = document.getElementById("settings-room-list")
+    const li = document.createElement("li")
+    const liTextValue = document.createTextNode(roomName)
+    li.appendChild(liTextValue)
+
+    const dcButton = document.createElement("button")
+    dcButton.textContent = "Disconnect"
+    dcButton.addEventListener("click", e => {
+        disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, mainDiv, roomName);
+    })
+
+    li.appendChild(dcButton)
+    settingsRoomList.appendChild(li)
+
     chats.push(room)
     return room
 }
@@ -211,6 +225,7 @@ document.getElementById("join-button").addEventListener("click", e => {
 
 loginBtn.addEventListener("click", (e) => {
     localStorage.setItem("username", name.value)
+    username.value = name.value
     document.getElementById("login").removeChild(name)
     document.getElementById("login").removeChild(loginBtn)
 
@@ -231,4 +246,16 @@ const saveRoomToLocalStorage = (roomName) => {
 
 location.hash = "settings"
 
+
+function disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, mainDiv, roomName) {
+    room.disconnect();
+    roomsList.removeChild(roomLi);
+    settingsRoomList.removeChild(li);
+    rootElement.removeChild(mainDiv);
+    chats = chats.filter(e => e.roomName != roomName);
+    let rooms = localStorage.getItem("rooms");
+    rooms = JSON.parse(rooms);
+    rooms = rooms.filter(e => e != roomName);
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+}
 
