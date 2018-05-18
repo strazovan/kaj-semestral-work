@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
-    <script type="text/javascript">Loader.load(null, {api:"simple"});</script>
+    <script type="text/javascript">Loader.load(null, { api: "simple" });</script>
 </head>
 
 <body>
@@ -23,13 +23,25 @@
         <input type="button" value="login" id="login-button">
     </div>
     <section id="empty">
-     <div class=room id="settings">
-         <label >
-             Username: <input type="text" id="username-settings" name="username-settings">
-         </label>
-     </div>
+        <div class=room id="settings">
+            <div>
+                <p>
+                    <label>
+                        Username:
+                        <input type="text" id="username-settings" name="username-settings">
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Connect to room:
+                        <input type="text" name="new-room" id="new-room-input">
+                    </label>
+                    <input type="button" id="join-button" value="Join">
+                </p>
+            </div>
+        </div>
 
-	</script>
+        </script>
     </section>
     <script type="module" src="js/chat.js"></script>
 </body>

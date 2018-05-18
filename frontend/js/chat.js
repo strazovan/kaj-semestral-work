@@ -2,6 +2,8 @@ import { ChatRoom } from './ChatRoom.js'
 
 const name = document.getElementById("username")
 const loginBtn = document.getElementById("login-button")
+const username = document.getElementById("username-settings");
+const chats = []
 
 function createSettings() {
     const roomList = document.getElementById("room-list")
@@ -41,14 +43,14 @@ const makeCanvasDrawable = (canvas) => {
         }
         const x = e.pageX - canvas.offsetLeft;
         const y = e.pageY - canvas.offsetTop;
-        const radius = 3; 
+        const radius = 3;
         const fillColor = '#ff0000';
         ctx.fillCircle(x, y, radius, fillColor);
     };
     canvas.onmousedown = (e) => {
         canvas.isDrawing = true;
     };
-    canvas.onmouseup =  (e) => {
+    canvas.onmouseup = (e) => {
         canvas.isDrawing = false;
     };
 
@@ -143,7 +145,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     sendPositionBtn.setAttribute("type", "button")
     sendPositionBtn.value = "Send Position"
 
-    sendPositionBtn.addEventListener("click", e=> {
+    sendPositionBtn.addEventListener("click", e => {
         navigator.geolocation.getCurrentPosition(pos => {
             const toSend = pos.coords.longitude + " " + pos.coords.latitude
             room.sendPosition(toSend)
@@ -185,16 +187,48 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
         roomLi.classList.toggle("current-room")
     })
 
+    chats.push(room)
     return room
 }
 
-loginBtn.addEventListener("click", (e) => {
-    //testroom = new ChatRoom("ws://localhost:7000/rooms/KAJ", name.value, document.getElementById("room-box"))
-    //testroom2 = new ChatRoom("ws://localhost:7000/rooms/LAG", name.value, document.getElementById("room-box2"))
-    const lag = joinRoom(name.value, "LAG", document.getElementById("empty"), document.getElementById("room-list"))
-    const kaj = joinRoom(name.value, "KAJ", document.getElementById("empty"), document.getElementById("room-list"))
-    document.getElementById("login").removeChild(name)
-    document.getElementById("login").removeChild(loginBtn)
+if (localStorage.getItem("username") !== null) {
+    username.value = localStorage.getItem("username")
+    document.body.removeChild(document.getElementById("login"))
+    if (localStorage.getItem("rooms") != null) {
+        const rooms = JSON.parse(localStorage.getItem("rooms"))
+        rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), document.getElementById("room-list")))
+
+    }
+}
+
+document.getElementById("join-button").addEventListener("click", e => {
+    const roomName = document.getElementById("new-room-input").value
+    if (chats.filter(r => r.roomName == roomName).length == 0) {
+        joinRoom(username.value, roomName, document.getElementById("empty"), document.getElementById("room-list"))
+        saveRoomToLocalStorage(roomName)
+    }
 })
 
+loginBtn.addEventListener("click", (e) => {
+    localStorage.setItem("username", name.value)
+    document.getElementById("login").removeChild(name)
+    document.getElementById("login").removeChild(loginBtn)
+
+})
+
+const saveRoomToLocalStorage = (roomName) => {
+    let roomList = localStorage.getItem("rooms")
+    if (roomList == null) {
+        roomList = []
+    } else {
+        roomList = JSON.parse(roomList) //todo add try
+    }
+    if (!roomList.includes(roomName)) {
+        roomList.push(roomName)
+    }
+    localStorage.setItem("rooms", JSON.stringify(roomList))
+}
+
 location.hash = "settings"
+
+

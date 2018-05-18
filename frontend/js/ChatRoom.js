@@ -3,7 +3,7 @@ import { MessageContainer } from './MessageContainer.js'
 import { UsersContainer } from './UsersContainer.js'
 
 class ChatRoom {
-    constructor(address, roomName ,username, messageComponent, usersComponent) {
+    constructor(address, roomName, username, messageComponent, usersComponent) {
         this._address = address
         this._roomName = roomName
         this._username = username
@@ -25,6 +25,10 @@ class ChatRoom {
 
     get connected() {
         return this._socket.OPEN
+    }
+
+    get roomName() {
+        return this._roomName
     }
 
     _sendMessage(message) {
