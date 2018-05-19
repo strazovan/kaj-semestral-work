@@ -9,8 +9,19 @@ class ChatRoom {
         this._username = username
         this._messageContainer = new MessageContainer(messageComponent)
         this._usersContainer = new UsersContainer(this._username, usersComponent)
-        this._socket = this._createWebSocket()
+        //this._socket = this._createWebSocket()
         this._loggedIn = false
+        if (navigator.onLine) {
+            localStorage.setItem(roomName, JSON.stringify([]))
+            this._socket = this._createWebSocket()
+        }
+        else{
+            let lastMessages = localStorage.getItem(this._roomName)
+            if(lastMessages != null){
+                lastMessages = JSON.parse(lastMessages)
+                lastMessages.forEach(msg => this._messageContainer.addMessage(msg))
+            }
+        }
     }
 
     _createWebSocket() {
@@ -31,7 +42,7 @@ class ChatRoom {
         return this._roomName
     }
 
-    disconnect(){
+    disconnect() {
         this._socket.close()
     }
 
@@ -80,6 +91,7 @@ class ChatRoom {
         switch (message.messageType) {
             case "MESSAGE":
                 this._messageContainer.addMessage(message)
+                this._saveMessageToLocalStorage(message)
                 break
             case "LOGIN":
                 if (message.content === "Login failed") {
@@ -154,6 +166,23 @@ class ChatRoom {
         // want to be respectful there is no need to bother them any more.
     }
 
+    _saveMessageToLocalStorage(message) {
+        const messages = JSON.parse(localStorage.getItem(this._roomName))
+        switch (message.contentType) {
+            case "TEXT_MESSAGE":
+                messages.push(message)
+                break
+            case "IMAGE":
+                message.contentType = "TEXT"
+                message.content = "WE DO NOT SAVE IMAGES :("
+                break
+            case "POSITION":
+                messages.push(message)
+                break
+        }
+
+        localStorage.setItem(this._roomName, JSON.stringify(messages))
+    }
 }
 
 export { ChatRoom }
