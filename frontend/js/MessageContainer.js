@@ -71,7 +71,7 @@ class MessageContainer {
 
         const positions = message.content.split(" ")
         const middle = SMap.Coords.fromWGS84(positions[0], positions[1])
-        const map = new SMap(JAK.gel(mapDiv), middle, 8, SMap.DEF_TURIST)
+        const map = new SMap(JAK.gel(mapDiv), middle, 15, SMap.DEF_TURIST)
         map.addMarker(middle)
 
        
