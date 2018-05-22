@@ -1,9 +1,15 @@
 import { ChatRoom } from './ChatRoom.js'
 
+let chats = []
 const name = document.getElementById("username")
 const loginBtn = document.getElementById("login-button")
 const username = document.getElementById("username-settings");
-let chats = []
+const usernameBtn = document.getElementById("change-name-button")
+
+
+usernameBtn.addEventListener("click", e => {
+    localStorage.setItem("username", username.value)
+})
 
 function createSettings() {
     const roomList = document.getElementById("room-list")
@@ -13,6 +19,7 @@ function createSettings() {
     roomLink.textContent = "Settings"
     roomLi.appendChild(roomLink)
     roomList.appendChild(roomLi)
+
 
 }
 
