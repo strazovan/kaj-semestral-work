@@ -6,21 +6,22 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    background-color: #EDFDFD;
 }
 
 #room-list li{
     border: 1px solid white;
-    background-color: lightblue;
+    background-color: #0D7777;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #room-list .current-room{
-    background-color: green;
+    background-color: #072c2c;
 }
 
 #room-list li a {
@@ -49,7 +50,14 @@ canvas:not(.canvas-visible){
 
 .users-box{
     width: 15vh;
-    margin: 0 15px 0 15px;
+    height: 80vh;
+    padding: 0 15px 0 15px;
+    border-style: solid;
+    border-color: black;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 0px;
 }
 
 .users-box ul {
@@ -62,7 +70,7 @@ canvas:not(.canvas-visible){
 
 .message-box{
     border-radius: 5px;
-    background-color: lightblue;
+    background-color: #d6fafa;
     margin-bottom: 10px;
 }
 
@@ -83,11 +91,12 @@ canvas:not(.canvas-visible){
     max-height: 80vh;
     border: 1px solid black;
     flex-grow: 1;
+    background-color: white;
 }
 
-/* .room[class~=dragging]{
-    opacity: 0.5;
-} */
+.chat-area button {
+    margin: 5px 5px 5px 5px;
+}
 
 #empty {
     flex-grow: 1;
@@ -97,6 +106,7 @@ canvas:not(.canvas-visible){
     display: flex;
     flex-direction: column;
     border: 1px solid black;
+    background-color: white;
 }
 
 .canvas-button{

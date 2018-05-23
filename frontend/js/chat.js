@@ -139,26 +139,24 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
     const canvas = document.createElement("canvas")
     const canvasButton = document.createElement("button")
+    canvasButton.textContent = "Show canvas"
     canvasButton.classList.add("canvas-button")
     canvasButton.addEventListener("click", (e) => {
         canvas.classList.toggle("canvas-visible")
     })
     chatarea.appendChild(canvasButton)
 
-    const sendImage = document.createElement("div")
 
     const sendImageBtn = document.createElement("input")
     sendImageBtn.setAttribute("type", "button")
     sendImageBtn.value = "Send image"
 
-    sendImage.appendChild(sendImageBtn)
-    chatarea.appendChild(sendImage)
+    chatarea.appendChild(sendImageBtn)
 
-    const sendPosition = document.createElement("div")
 
-    const sendPositionBtn = document.createElement("input")
-    sendPositionBtn.setAttribute("type", "button")
-    sendPositionBtn.value = "Send Position"
+    const sendPositionBtn = document.createElement("button")
+    //sendPositionBtn.setAttribute("type", "button")
+    sendPositionBtn.textContent = "Send Position"
 
     sendPositionBtn.addEventListener("click", e => {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -167,8 +165,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
         })
     })
 
-    sendPosition.appendChild(sendPositionBtn)
-    chatarea.appendChild(sendPosition)
+    chatarea.appendChild(sendPositionBtn)
 
     const drawSpace = document.createElement("div")
 
@@ -180,6 +177,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
     sendImageBtn.addEventListener("click", (e) => {
         room.sendImage(canvas.toDataURL())
+        canvas.getContext("2d").clearTo("black")
     })
 
     drawSpace.appendChild(canvas)
