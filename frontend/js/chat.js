@@ -16,6 +16,14 @@ function createSettings() {
     const roomLi = document.createElement("li")
     const roomLink = document.createElement("a")
     roomLink.setAttribute("href", "#settings")
+    roomLink.addEventListener("click", e => {
+        const currentlyActive = document.querySelector(".current-room")
+        if (currentlyActive != null) {
+            currentlyActive.classList.toggle("current-room")
+        }
+        roomLi.classList.toggle("current-room")
+    })
+    roomLi.classList.toggle("current-room")
     roomLink.textContent = "Settings"
     roomLi.appendChild(roomLink)
     roomList.appendChild(roomLi)
