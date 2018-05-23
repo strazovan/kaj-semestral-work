@@ -1,3 +1,7 @@
+nav{
+    margin: 0 20px 0 10px;
+}
+
 body {
     display: flex;
     flex-direction: row;
@@ -41,6 +45,11 @@ body {
 
 canvas:not(.canvas-visible){
     display: none;
+}
+
+.users-box{
+    width: 15vh;
+    margin: 0 15px 0 15px;
 }
 
 .users-box ul {

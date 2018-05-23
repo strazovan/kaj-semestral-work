@@ -5,6 +5,7 @@ class UsersContainer {
         this._me = myUserName
         this._list = document.createElement("ul")
         this._component = component
+        component.appendChild(document.createTextNode("Users in room"))
         component.appendChild(this._list)
     }
 
