@@ -186,22 +186,28 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
     const checkLoggedIn = (resolve, reject) => {
         if(room.loggedIn === "WAITING"){
-            setTimeout(checkLoggedIn, 500)
+            console.log("still waiting")
+            setTimeout(checkLoggedIn, 500, resolve, reject)
         }
         else{
             if(room.loggedIn === "SUCCES"){
-                return resolve(room.loggedIn)
+                return resolve()
+            }
+            else{
+                return reject()
             }
         }
     }
-    // new Promise( (resolve, reject) => {
-    //    checkLoggedIn(resolve, reject)
-    // }).then(console.log)
-    roomsList.appendChild(roomLi)
-    settingsRoomList.appendChild(li)
-    rootElement.appendChild(mainDiv)
-    
-    chats.push(room)
+    new Promise( (resolve, reject) => {
+       checkLoggedIn(resolve, reject)
+    }).then(() => {
+        roomsList.appendChild(roomLi)
+        settingsRoomList.appendChild(li)
+        rootElement.appendChild(mainDiv)
+        chats.push(room)
+    }).catch(() => alert("Login has failed, name you choosed is probably already taken."))
+
+
     return room
 }
 
