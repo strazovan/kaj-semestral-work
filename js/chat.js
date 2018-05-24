@@ -205,6 +205,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
         settingsRoomList.appendChild(li)
         rootElement.appendChild(mainDiv)
         chats.push(room)
+        saveRoomToLocalStorage(roomName)
     }).catch(() => alert("Login has failed, name you choosed is probably already taken."))
 
 
@@ -225,7 +226,6 @@ document.getElementById("join-button").addEventListener("click", e => {
     const roomName = document.getElementById("new-room-input").value
     if (chats.filter(r => r.roomName == roomName).length == 0) {
         joinRoom(username.value, roomName, document.getElementById("empty"), roomsList)
-        saveRoomToLocalStorage(roomName)
     }
 })
 
