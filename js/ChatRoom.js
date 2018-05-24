@@ -9,15 +9,14 @@ class ChatRoom {
         this._username = username
         this._messageContainer = new MessageContainer(messageComponent)
         this._usersContainer = new UsersContainer(this._username, usersComponent)
-        //this._socket = this._createWebSocket()
-        this._loggedIn = false
+        this._loggedIn = "WAITING"
         if (navigator.onLine) {
             localStorage.setItem(roomName, JSON.stringify([]))
             this._socket = this._createWebSocket()
         }
-        else{
+        else {
             let lastMessages = localStorage.getItem(this._roomName)
-            if(lastMessages != null){
+            if (lastMessages != null) {
                 lastMessages = JSON.parse(lastMessages)
                 lastMessages.forEach(msg => this._messageContainer.addMessage(msg))
             }
@@ -42,6 +41,10 @@ class ChatRoom {
         return this._roomName
     }
 
+    get loggedIn() {
+        return this._loggedIn
+    }
+    
     disconnect() {
         this._socket.close()
     }
@@ -67,7 +70,7 @@ class ChatRoom {
     }
 
     _login() {
-        if (!this._loggedIn) {
+        if (this._loggedIn === "WAITING") {
             this._sendMessage(new Message(this._username, "LOGIN", "TEXT_MESSAGE", this._username))
         }
     }
@@ -95,10 +98,10 @@ class ChatRoom {
                 break
             case "LOGIN":
                 if (message.content === "Login failed") {
-                    console.log("failed to login")
+                    this._loggedIn = "FAILED"
                 }
                 else {
-                    this._loggedIn = true
+                    this._loggedIn = "SUCCES"
                 }
                 // todo get login success and change 
                 break

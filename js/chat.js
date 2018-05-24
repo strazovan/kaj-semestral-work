@@ -5,6 +5,7 @@ const name = document.getElementById("username")
 const loginBtn = document.getElementById("login-button")
 const username = document.getElementById("username-settings");
 const usernameBtn = document.getElementById("change-name-button")
+const roomsList = document.getElementById("room-list");
 
 
 usernameBtn.addEventListener("click", e => {
@@ -12,20 +13,8 @@ usernameBtn.addEventListener("click", e => {
 })
 
 function createSettings() {
-    const roomList = document.getElementById("room-list")
-    const roomLi = document.createElement("li")
-    const roomLink = document.createElement("a")
-    roomLink.setAttribute("href", "#settings")
-    roomLink.addEventListener("click", e => {
-        const currentlyActive = document.querySelector(".current-room")
-        if (currentlyActive != null) {
-            currentlyActive.classList.toggle("current-room")
-        }
-        roomLi.classList.toggle("current-room")
-    })
-    roomLi.classList.toggle("current-room")
-    roomLink.textContent = "Settings"
-    roomLi.appendChild(roomLink)
+    const roomList = roomsList
+    const roomLi = createRoomLi("Settings")
     roomList.appendChild(roomLi)
 
 
@@ -72,6 +61,7 @@ const makeCanvasDrawable = (canvas) => {
 }
 
 
+
 const joinRoom = (username, roomName, rootElement, roomsList) => {
     // todo check room existence
     const mainDiv = document.createElement("div")
@@ -115,12 +105,6 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     })
 
 
-    // mainDiv.addEventListener("dragenter", e => {
-    //     mainDiv.classList.add("dragging")
-    // })
-    // mainDiv.addEventListener("dragleave", e => {
-    //     mainDiv.classList.remove("dragging")
-    // })
     messagebox.addEventListener("dragover", e => {
         e.preventDefault()
     })
@@ -183,37 +167,40 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     drawSpace.appendChild(canvas)
     chatarea.appendChild(drawSpace)
 
-    rootElement.appendChild(mainDiv)
-
-    const roomLi = document.createElement("li")
-    const roomLink = document.createElement("a")
-    roomLink.setAttribute("href", `#${roomName}`)
-    roomLink.textContent = roomName
-    roomLi.appendChild(roomLink)
-    roomsList.appendChild(roomLi)
-
-    roomLink.addEventListener("click", e => {
-        const currentlyActive = document.querySelector(".current-room")
-        if (currentlyActive != null) {
-            currentlyActive.classList.toggle("current-room")
-        }
-        roomLi.classList.toggle("current-room")
-    })
-
+    
+    const roomLi = createRoomLi(roomName);
+    
+    
     const settingsRoomList = document.getElementById("settings-room-list")
     const li = document.createElement("li")
     const liTextValue = document.createTextNode(roomName)
     li.appendChild(liTextValue)
-
+    
     const dcButton = document.createElement("button")
     dcButton.textContent = "Disconnect"
     dcButton.addEventListener("click", e => {
         disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, mainDiv, roomName);
     })
-
+    
     li.appendChild(dcButton)
-    settingsRoomList.appendChild(li)
 
+    const checkLoggedIn = (resolve, reject) => {
+        if(room.loggedIn === "WAITING"){
+            setTimeout(checkLoggedIn, 500)
+        }
+        else{
+            if(room.loggedIn === "SUCCES"){
+                return resolve(room.loggedIn)
+            }
+        }
+    }
+    // new Promise( (resolve, reject) => {
+    //    checkLoggedIn(resolve, reject)
+    // }).then(console.log)
+    roomsList.appendChild(roomLi)
+    settingsRoomList.appendChild(li)
+    rootElement.appendChild(mainDiv)
+    
     chats.push(room)
     return room
 }
@@ -223,7 +210,7 @@ if (localStorage.getItem("username") !== null) {
     document.body.removeChild(document.getElementById("login"))
     if (localStorage.getItem("rooms") != null) {
         const rooms = JSON.parse(localStorage.getItem("rooms"))
-        rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), document.getElementById("room-list")))
+        rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), roomsList))
 
     }
 }
@@ -231,7 +218,7 @@ if (localStorage.getItem("username") !== null) {
 document.getElementById("join-button").addEventListener("click", e => {
     const roomName = document.getElementById("new-room-input").value
     if (chats.filter(r => r.roomName == roomName).length == 0) {
-        joinRoom(username.value, roomName, document.getElementById("empty"), document.getElementById("room-list"))
+        joinRoom(username.value, roomName, document.getElementById("empty"), roomsList)
         saveRoomToLocalStorage(roomName)
     }
 })
@@ -259,6 +246,22 @@ const saveRoomToLocalStorage = (roomName) => {
 
 location.hash = "settings"
 
+
+function createRoomLi(roomName) {
+    const roomLi = document.createElement("li");
+    const roomLink = document.createElement("a");
+    roomLink.setAttribute("href", `#${roomName}`);
+    roomLink.textContent = roomName;
+    roomLi.appendChild(roomLink);
+    roomLink.addEventListener("click", e => {
+        const currentlyActive = document.querySelector(".current-room");
+        if (currentlyActive != null) {
+            currentlyActive.classList.toggle("current-room");
+        }
+        roomLi.classList.toggle("current-room");
+    });
+    return roomLi;
+}
 
 function disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, mainDiv, roomName) {
     room.disconnect();
