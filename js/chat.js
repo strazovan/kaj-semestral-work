@@ -1,6 +1,7 @@
 import { ChatRoom } from './ChatRoom.js'
 
 let chats = []
+const endpoint = "ws://localhost:7000/rooms"
 const username = document.getElementById("username-settings");
 const usernameBtn = document.getElementById("change-name-button")
 const roomsList = document.getElementById("room-list");
@@ -89,7 +90,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
     mainDiv.appendChild(usersbox)
 
-    const room = new ChatRoom(`ws://localhost:7000/rooms/${roomName}`, roomName, username, messagebox, usersbox)
+    const room = new ChatRoom(`${endpoint}/${roomName}`, roomName, username, messagebox, usersbox)
 
     const sendBox = document.createElement("div")
     sendBox.contentEditable = "true"
