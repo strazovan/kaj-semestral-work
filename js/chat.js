@@ -1,8 +1,6 @@
 import { ChatRoom } from './ChatRoom.js'
 
 let chats = []
-const name = document.getElementById("username")
-const loginBtn = document.getElementById("login-button")
 const username = document.getElementById("username-settings");
 const usernameBtn = document.getElementById("change-name-button")
 const roomsList = document.getElementById("room-list");
@@ -214,7 +212,6 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
 if (localStorage.getItem("username") !== null) {
     username.value = localStorage.getItem("username")
-    document.body.removeChild(document.getElementById("login"))
     if (localStorage.getItem("rooms") != null) {
         const rooms = JSON.parse(localStorage.getItem("rooms"))
         rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), roomsList))
@@ -223,19 +220,15 @@ if (localStorage.getItem("username") !== null) {
 }
 
 document.getElementById("join-button").addEventListener("click", e => {
+    if(username.value.length == 0){
+        return
+    }
     const roomName = document.getElementById("new-room-input").value
     if (chats.filter(r => r.roomName == roomName).length == 0) {
         joinRoom(username.value, roomName, document.getElementById("empty"), roomsList)
     }
 })
 
-loginBtn.addEventListener("click", (e) => {
-    localStorage.setItem("username", name.value)
-    username.value = name.value
-    document.getElementById("login").removeChild(name)
-    document.getElementById("login").removeChild(loginBtn)
-
-})
 
 const saveRoomToLocalStorage = (roomName) => {
     let roomList = localStorage.getItem("rooms")
