@@ -7,7 +7,9 @@ body {
     flex-direction: row;
     min-height: 100vh;
     background-color: #EDFDFD;
+    min-width: 100vh;
 }
+
 
 #room-list li{
     border: 1px solid white;
@@ -49,7 +51,7 @@ canvas:not(.canvas-visible){
 }
 
 .users-box{
-    width: 15vh;
+    min-width: 15vh;
     height: 80vh;
     padding: 0 15px 0 15px;
     border-style: solid;
@@ -116,4 +118,15 @@ canvas:not(.canvas-visible){
 .map-div {
     width: 400px;
     height: 400px;
+}
+
+
+@media screen and (max-width: 600px){
+    body{
+        flex-direction: column;
+    }
+
+    #room-list li{
+        display: inline-flex;
+    }
 }

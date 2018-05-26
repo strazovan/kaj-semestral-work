@@ -14,7 +14,7 @@ usernameBtn.addEventListener("click", e => {
 
 function createSettings() {
     const roomList = roomsList
-    const roomLi = createRoomLi("Settings")
+    const roomLi = createRoomLi("settings")
     roomList.appendChild(roomLi)
 
 
