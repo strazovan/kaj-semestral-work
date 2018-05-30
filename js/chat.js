@@ -166,39 +166,39 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     drawSpace.appendChild(canvas)
     chatarea.appendChild(drawSpace)
 
-    
+
     const roomLi = createRoomLi(roomName);
-    
-    
+
+
     const settingsRoomList = document.getElementById("settings-room-list")
     const li = document.createElement("li")
     const liTextValue = document.createTextNode(roomName)
     li.appendChild(liTextValue)
-    
+
     const dcButton = document.createElement("button")
     dcButton.textContent = "Disconnect"
     dcButton.addEventListener("click", e => {
         disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, mainDiv, roomName);
     })
-    
+
     li.appendChild(dcButton)
 
     const checkLoggedIn = (resolve, reject) => {
-        if(room.loggedIn === "WAITING"){
+        if (room.loggedIn === "WAITING") {
             console.log("still waiting")
             setTimeout(checkLoggedIn, 500, resolve, reject)
         }
-        else{
-            if(room.loggedIn === "SUCCES"){
+        else {
+            if (room.loggedIn === "SUCCES") {
                 return resolve()
             }
-            else{
+            else {
                 return reject()
             }
         }
     }
-    new Promise( (resolve, reject) => {
-       checkLoggedIn(resolve, reject)
+    new Promise((resolve, reject) => {
+        checkLoggedIn(resolve, reject)
     }).then(() => {
         roomsList.appendChild(roomLi)
         settingsRoomList.appendChild(li)
@@ -211,17 +211,20 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     return room
 }
 
-if (localStorage.getItem("username") !== null) {
-    username.value = localStorage.getItem("username")
-    if (localStorage.getItem("rooms") != null) {
-        const rooms = JSON.parse(localStorage.getItem("rooms"))
-        rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), roomsList))
+if (localStorage.getItem("username") != null) {
+    const savedName = localStorage.getItem("username")
+    if (savedName.length > 0) {
+        username.value = savedName
+        if (localStorage.getItem("rooms") != null) {
+            const rooms = JSON.parse(localStorage.getItem("rooms"))
+            rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), roomsList))
 
+        }
     }
 }
 
 document.getElementById("join-button").addEventListener("click", e => {
-    if(username.value.length == 0){
+    if (username.value.length == 0) {
         return
     }
     const roomName = document.getElementById("new-room-input").value

@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
-    <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
-    <script type="text/javascript">Loader.load(null, { api: "simple" });</script>
+    <script src="https://api.mapy.cz/loader.js"></script>
+    <script>Loader.load(null, { api: "simple" });</script>
 </head>
 
 <body>
@@ -24,9 +24,9 @@
                 <p>
                     <label>
                         Username:
-                        <input type="text" id="username-settings" name="username-settings">
-                        <input type="button" id="change-name-button" value="Change">
+                        <input type="text" id="username-settings" name="username-settings" required placeholder="username">
                     </label>
+                    <input type="button" id="change-name-button" value="Change">
                 </p>
                 <p>
                     <label>

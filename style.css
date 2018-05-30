@@ -121,7 +121,7 @@ canvas:not(.canvas-visible){
 }
 
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 780px){
     body{
         flex-direction: column;
     }

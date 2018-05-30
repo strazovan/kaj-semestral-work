@@ -53,10 +53,8 @@ class MessageContainer {
 
         image.src = data
 
-        const content = document.createElement("p") //todo delete to make it valid html5
         imageDiv.appendChild(canvas)
-        content.appendChild(imageDiv)
-        div.appendChild(content)
+        div.appendChild(imageDiv)
         this._messageComponent.appendChild(div)
     }
 
