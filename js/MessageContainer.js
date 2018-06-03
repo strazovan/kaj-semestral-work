@@ -1,10 +1,17 @@
 import { Message } from './Message.js'
 
+/**
+ * Class that represents message box. Uses provided HTMLElement to show messages.
+ */
 class MessageContainer {
     constructor(messageComponent) {
         this._messageComponent = messageComponent
     }
 
+    /**
+     * Adds message to messagebox. Creates representation according to it's content type.
+     * @param {Message} message 
+     */
     addMessage(message) {
         switch (message.contentType) {
             case "TEXT_MESSAGE":

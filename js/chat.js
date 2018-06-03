@@ -1,10 +1,12 @@
 import { ChatRoom } from './ChatRoom.js'
 
 let chats = []
+const listUrl = "http://localhost:7000/rooms/list"
 const endpoint = "ws://localhost:7000/rooms"
 const username = document.getElementById("username-settings");
 const usernameBtn = document.getElementById("change-name-button")
 const roomsList = document.getElementById("room-list");
+const settingsRoomList = document.getElementById("settings-room-list")
 
 
 usernameBtn.addEventListener("click", e => {
@@ -18,6 +20,17 @@ function createSettings() {
 
 
 }
+
+// fetch(listUrl).then(response => {
+//     response.json().then(rooms => {
+//         rooms.map(room => {
+//             const tNode = document.createTextNode(room.name)
+//             const li = document.createElement("li")
+//             li.appendChild(tNode)
+//             settingsRoomList.appendChild(li)
+//         })
+//     })
+// })
 
 createSettings()
 
@@ -170,7 +183,6 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     const roomLi = createRoomLi(roomName);
 
 
-    const settingsRoomList = document.getElementById("settings-room-list")
     const li = document.createElement("li")
     const liTextValue = document.createTextNode(roomName)
     li.appendChild(liTextValue)

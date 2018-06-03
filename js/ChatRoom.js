@@ -2,6 +2,10 @@ import { Message } from './Message.js'
 import { MessageContainer } from './MessageContainer.js'
 import { UsersContainer } from './UsersContainer.js'
 
+/**
+ * Class that represents one chat room. Provides methods for sending all types of messages. 
+ * This class itself contains websocket for room and handles all incomming messages.
+ */
 class ChatRoom {
     constructor(address, roomName, username, messageComponent, usersComponent) {
         this._address = address
@@ -23,6 +27,9 @@ class ChatRoom {
         }
     }
 
+    /**
+     * Creates websocket and assings handlers.
+     */
     _createWebSocket() {
         const socket = new WebSocket(this._address)
 
@@ -88,6 +95,10 @@ class ChatRoom {
         this._getUsersList()
     }
 
+    /**
+     * Handles incoming messages. If needed, delegates it to proper container.
+     * @param {MessageEvent} event 
+     */
     _onMessage(event) {
         console.log(event.data)
         const message = JSON.parse(event.data)
@@ -169,6 +180,10 @@ class ChatRoom {
         // want to be respectful there is no need to bother them any more.
     }
 
+    /**
+     * Saves incoming message to local storage.
+     * @param {Message} message 
+     */
     _saveMessageToLocalStorage(message) {
         const messages = JSON.parse(localStorage.getItem(this._roomName))
         switch (message.contentType) {

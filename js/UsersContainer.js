@@ -1,5 +1,8 @@
 import { Message } from './Message.js'
 
+/**
+ * Class that represents usersbox. Shows users in list (uses ul). Highlights provided username.
+ */
 class UsersContainer {
     constructor(myUserName, component) {
         this._me = myUserName
