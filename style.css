@@ -96,6 +96,12 @@ canvas:not(.canvas-visible){
     background-color: white;
 }
 
+.room-box.disabled, .room-box.disabled > *{
+    background-color: grey;
+}
+
+
+
 .chat-area button {
     margin: 5px 5px 5px 5px;
 }

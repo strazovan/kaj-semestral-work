@@ -8,6 +8,7 @@ import { UsersContainer } from './UsersContainer.js'
  */
 class ChatRoom {
     constructor(address, roomName, username, messageComponent, usersComponent) {
+        this._enabled = true
         this._address = address
         this._roomName = roomName
         this._username = username
@@ -51,29 +52,32 @@ class ChatRoom {
     get loggedIn() {
         return this._loggedIn
     }
-    
+
     disconnect() {
         this._socket.close()
     }
 
     _sendMessage(message) {
+        if (!this._enabled)
+            return false
         const string = JSON.stringify(message)
         this._socket.send(string)
+        return true
     }
 
     send(stringmessage) {
         const msg = new Message(this._username, "MESSAGE", "TEXT_MESSAGE", stringmessage)
-        this._sendMessage(msg)
+        return this._sendMessage(msg)
     }
 
     sendImage(imageAsUrl) {
         const msg = new Message(this._username, "MESSAGE", "IMAGE", imageAsUrl)
-        this._sendMessage(msg)
+        return this._sendMessage(msg)
     }
 
     sendPosition(positionString) {
         const msg = new Message(this._username, "MESSAGE", "POSITION", positionString)
-        this._sendMessage(msg)
+        return this._sendMessage(msg)
     }
 
     _login() {
@@ -135,6 +139,17 @@ class ChatRoom {
 
     _onClose(event) {
         console.log(event)
+    }
+
+    /**
+     * Sets rooms enabled state to <code>enabled</code>.
+     * @param {Boolean} enabled 
+     */
+    setEnabled(enabled) {
+        if (this._enabled != enabled) {
+            this._enabled = enabled
+            this._messageContainer.setEnabled(enabled)
+        }
     }
 
     notifyMessage(message) {

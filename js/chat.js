@@ -111,8 +111,8 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
 
     sendBox.addEventListener("keyup", (event) => {
         if (event.keyCode === 13) {
-            room.send(sendBox.textContent)
-            sendBox.textContent = ""
+            if (room.send(sendBox.textContent))
+                sendBox.textContent = ""
         }
     })
 
@@ -234,6 +234,10 @@ if (localStorage.getItem("username") != null) {
         }
     }
 }
+
+
+window.addEventListener("online", _ => chats.forEach(room => room.setEnabled(true)))
+window.addEventListener("offline", _ => chats.forEach(room => room.setEnabled(false)))
 
 document.getElementById("join-button").addEventListener("click", e => {
     if (username.value.length == 0) {

@@ -65,12 +65,12 @@ class MessageContainer {
         this._messageComponent.appendChild(div)
     }
 
-    _addPositionMessage(message){
+    _addPositionMessage(message) {
         const div = this._prepareMessageDiv(message)
 
         const mapDiv = document.createElement("div")
         mapDiv.classList.add("map-div")
-        
+
         div.appendChild(mapDiv)
         this._messageComponent.appendChild(div)
 
@@ -79,7 +79,7 @@ class MessageContainer {
         const map = new SMap(JAK.gel(mapDiv), middle, 15, SMap.DEF_TURIST)
         map.addMarker(middle)
 
-       
+
     }
 
     _prepareMessageDiv(message) {
@@ -89,6 +89,17 @@ class MessageContainer {
         div.appendChild(user)
         user.textContent = message.sender.username
         return div
+    }
+
+    /**
+     * Sets enabled state of this componenet to parameter value. Disables container.
+     * @param {Boolean} enabled 
+     */
+    setEnabled(enabled) {
+        if (!enabled)
+            this._messageComponent.classList.add("disabled")
+        else
+            this._messageComponent.classList.remove("disabled")
     }
 }
 
