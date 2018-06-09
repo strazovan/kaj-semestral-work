@@ -20,6 +20,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 5px;
+}
+
+#room-list li:hover{
+    background-color: #0D7790;
+    box-shadow: 1px 1px gray;
 }
 
 #room-list .current-room{
