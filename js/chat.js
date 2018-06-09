@@ -1,4 +1,5 @@
 import { ChatRoom } from './ChatRoom.js'
+import { getFromLocalStorage, saveToLocalStorage} from './localstorage.js'
 
 let chats = []
 const listUrl = "http://localhost:7000/rooms/list"
@@ -10,7 +11,7 @@ const settingsRoomList = document.getElementById("settings-room-list")
 
 
 usernameBtn.addEventListener("click", e => {
-    localStorage.setItem("username", username.value)
+    saveToLocalStorage("username", username.value)
 })
 
 function createSettings() {
@@ -223,12 +224,12 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     return room
 }
 
-if (localStorage.getItem("username") != null) {
-    const savedName = localStorage.getItem("username")
+if (getFromLocalStorage("username") != null) {
+    const savedName = getFromLocalStorage("username")
     if (savedName.length > 0) {
         username.value = savedName
-        if (localStorage.getItem("rooms") != null) {
-            const rooms = JSON.parse(localStorage.getItem("rooms"))
+        if (getFromLocalStorage("rooms") != null) {
+            const rooms = JSON.parse(getFromLocalStorage("rooms"))
             rooms.forEach(room => joinRoom(username.value, room, document.getElementById("empty"), roomsList))
 
         }
@@ -251,7 +252,7 @@ document.getElementById("join-button").addEventListener("click", e => {
 
 
 const saveRoomToLocalStorage = (roomName) => {
-    let roomList = localStorage.getItem("rooms")
+    let roomList = getFromLocalStorage("rooms")
     if (roomList == null) {
         roomList = []
     } else {
@@ -260,7 +261,7 @@ const saveRoomToLocalStorage = (roomName) => {
     if (!roomList.includes(roomName)) {
         roomList.push(roomName)
     }
-    localStorage.setItem("rooms", JSON.stringify(roomList))
+    saveToLocalStorage("rooms", JSON.stringify(roomList))
 }
 
 location.hash = "settings"
@@ -288,9 +289,9 @@ function disconnect(room, roomsList, roomLi, settingsRoomList, li, rootElement, 
     settingsRoomList.removeChild(li);
     rootElement.removeChild(mainDiv);
     chats = chats.filter(e => e.roomName != roomName);
-    let rooms = localStorage.getItem("rooms");
+    let rooms = getFromLocalStorage("rooms");
     rooms = JSON.parse(rooms);
     rooms = rooms.filter(e => e != roomName);
-    localStorage.setItem("rooms", JSON.stringify(rooms));
+    saveToLocalStorage("rooms", JSON.stringify(rooms));
 }
 

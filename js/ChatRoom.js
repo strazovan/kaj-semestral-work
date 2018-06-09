@@ -1,6 +1,7 @@
 import { Message } from './Message.js'
 import { MessageContainer } from './MessageContainer.js'
 import { UsersContainer } from './UsersContainer.js'
+import { getFromLocalStorage, saveToLocalStorage} from './localstorage.js'
 
 /**
  * Class that represents one chat room. Provides methods for sending all types of messages. 
@@ -16,11 +17,11 @@ class ChatRoom {
         this._usersContainer = new UsersContainer(this._username, usersComponent)
         this._loggedIn = "WAITING"
         if (navigator.onLine) {
-            localStorage.setItem(roomName, JSON.stringify([]))
+            saveToLocalStorage(roomName, JSON.stringify([]))
             this._socket = this._createWebSocket()
         }
         else {
-            let lastMessages = localStorage.getItem(this._roomName)
+            let lastMessages = getFromLocalStorage(this._roomName)
             if (lastMessages != null) {
                 lastMessages = JSON.parse(lastMessages)
                 lastMessages.forEach(msg => this._messageContainer.addMessage(msg))
@@ -178,7 +179,7 @@ class ChatRoom {
         // Let's check whether notification permissions have already been granted
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
-            const notification = new Notification(title, { body: content })
+            new Notification(title, { body: content })
         }
 
         // Otherwise, we need to ask the user for permission
@@ -186,7 +187,7 @@ class ChatRoom {
             Notification.requestPermission(function (permission) {
                 // If the user accepts, let's create a notification
                 if (permission === "granted") {
-                    const notification = new Notification(title, { body: content })
+                    new Notification(title, { body: content })
                 }
             });
         }
@@ -200,7 +201,7 @@ class ChatRoom {
      * @param {Message} message 
      */
     _saveMessageToLocalStorage(message) {
-        const messages = JSON.parse(localStorage.getItem(this._roomName))
+        const messages = JSON.parse(getFromLocalStorage(this._roomName))
         switch (message.contentType) {
             case "TEXT_MESSAGE":
                 messages.push(message)
@@ -214,7 +215,7 @@ class ChatRoom {
                 break
         }
 
-        localStorage.setItem(this._roomName, JSON.stringify(messages))
+        saveToLocalStorage(this._roomName, JSON.stringify(messages))
     }
 }
 
