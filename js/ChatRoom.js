@@ -181,6 +181,7 @@ class ChatRoom {
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
             new Notification(title, { body: content })
+            new Audio("resources/beep.mp3").play()
         }
 
         // Otherwise, we need to ask the user for permission
@@ -189,6 +190,7 @@ class ChatRoom {
                 // If the user accepts, let's create a notification
                 if (permission === "granted") {
                     new Notification(title, { body: content })
+                    new Audio("resources/beep.mp3").play()
                 }
             });
         }
