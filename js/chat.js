@@ -111,7 +111,7 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     sendBox.classList.add("send-box")
 
     sendBox.addEventListener("keyup", (event) => {
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && sendBox.innerText.trim().length > 0) {
             if (room.send(sendBox.textContent))
                 sendBox.textContent = ""
         }
