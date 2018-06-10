@@ -1,5 +1,5 @@
 import { ChatRoom } from './ChatRoom.js'
-import { getFromLocalStorage, saveToLocalStorage} from './localstorage.js'
+import { getFromLocalStorage, saveToLocalStorage } from './localstorage.js'
 
 let chats = []
 const listUrl = "https://kaj-backend.herokuapp.com/rooms/list"
@@ -110,10 +110,13 @@ const joinRoom = (username, roomName, rootElement, roomsList) => {
     sendBox.contentEditable = "true"
     sendBox.classList.add("send-box")
 
-    sendBox.addEventListener("keyup", (event) => {
-        if (event.keyCode === 13 && sendBox.innerText.trim().length > 0) {
-            if (room.send(sendBox.textContent))
-                sendBox.textContent = ""
+    sendBox.addEventListener("keydown", (event) => {
+        if (event.keyCode === 13) {
+            if (sendBox.innerText.trim().length > 0) {
+                if (room.send(sendBox.textContent))
+                    sendBox.textContent = ""
+            }
+            event.preventDefault()
         }
     })
 
