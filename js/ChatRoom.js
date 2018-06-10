@@ -139,7 +139,7 @@ class ChatRoom {
     }
 
     _onClose(event) {
-        this._messageContainer.addMessage(new Message("Server", "message", "message/text", "You have been disconnected."))
+        this._messageContainer.addMessage(JSON.stringify(new Message("Server", "message", "message/text", "You have been disconnected.")))
         console.log(event)
     }
 
