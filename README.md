@@ -22,6 +22,9 @@ Dále se zde uživatel může připojit k místnoti pomocí tlačítka "Join" a 
 Chatovací místnost se skládá ze třech částí. První je "message box", ve kterém se zobrazují zprávy. Druhou částí je seznam uživatelů připojených v místnosti. V této části je jméno uživatele rozlišeno od ostatních tučným písmem. Tato část se aktualizuje, takže pokud se někdo do místnosti připojí nebo se z ní odpojí, změna se projeví bez potřeby přenačtení.
 Další část slouží pro odesílání zpráv. Obsahuje textbox do kterého se dá psát a po stistknutí klávesy enter se zpráva odešle. Pod ním jsou tlačítka "Show canvas", které zoobrazí kreslící plochu, "Send image", které odešle to, co je nakreslené v canvasu a vyčistí ho a "Send position", které pošle na základě geolokace aktuální pozici uživatele. Tato pozice bude zobrazene ve zprávě na mapě.
 
+#### Drag and drop
+Přetažením obrázku na box se zprávami lze odeslat obrázek. Limit velikosti obrázku je 10MB.
+
 ## Aktuálně dostupné chatovací místnosti
 * LAG
 * KAJ
