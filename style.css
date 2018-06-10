@@ -94,7 +94,8 @@ canvas:not(.canvas-visible){
     border: 1px solid black;
 }
 .room-box {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     min-height: 80vh;
     max-height: 80vh;
     border: 1px solid black;

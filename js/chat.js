@@ -2,8 +2,8 @@ import { ChatRoom } from './ChatRoom.js'
 import { getFromLocalStorage, saveToLocalStorage} from './localstorage.js'
 
 let chats = []
-const listUrl = "http://localhost:7000/rooms/list"
-const endpoint = "ws://localhost:7000/rooms"
+const listUrl = "https://kaj-backend.herokuapp.com/rooms/list"
+const endpoint = "wss://kaj-backend.herokuapp.com/rooms"
 const username = document.getElementById("username-settings");
 const usernameBtn = document.getElementById("change-name-button")
 const roomsList = document.getElementById("room-list");
